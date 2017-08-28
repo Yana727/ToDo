@@ -9,5 +9,10 @@ namespace ToDo.Models
         public DateTime Time { get; set; } = DateTime.Now;
 
         public int ID {get; set; }
+
+        public void Finished(){
+            Complete = true; 
+            Time = DateTime.Now; 
+        }
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using ToDo.Models;
 
 
+
 namespace ToDo.Controllers
 {
     public class HomeController : Controller
@@ -15,25 +16,31 @@ namespace ToDo.Controllers
 
         public HomeController(toDoContext context)
         {
-            _context = context;
+            this._context = context; // added this 
         }
         public IActionResult Index()
         {
-            return View();
+
+            return View(_context.ToDoModel.ToList());
         }
-
-        public IActionResult About()
+        [HttpPost] // talks to html 
+        public IActionResult Index(string Name)
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+            var currentToDo = new ToDoModel
+            {
+                TaskName = Name
+            };
+            _context.Add(currentToDo); //adds to the database 
+            _context.SaveChanges(); //adds to the database 
+            return View(_context.ToDoModel.ToList());
         }
-
-        public IActionResult Contact()
+        [HttpPost]
+        public IActionResult Complete(int ID)
         {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            var fin = _context.ToDoModel.FirstOrDefault(m=>m.ID == ID);
+            fin.Finished();
+            _context.SaveChanges();
+            return Redirect("Index");
         }
 
         public IActionResult Error()
