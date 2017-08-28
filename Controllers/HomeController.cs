@@ -20,7 +20,10 @@ namespace ToDo.Controllers
         }
         public IActionResult Index()
         {
-
+            // Removing any tasks that don't have a TaskName before we load the index.
+            var forRemoval = _context.ToDoModel.Where(w => w.TaskName == null);
+            _context.ToDoModel.RemoveRange(forRemoval);
+            _context.SaveChanges();
             return View(_context.ToDoModel.ToList());
         }
         [HttpPost] // talks to html 

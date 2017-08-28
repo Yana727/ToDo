@@ -5,7 +5,7 @@
 
 <section>
     <h1>ToDo List</h1>
-    <form asp-controller="Home"asp-action = "Index" method = "Post"> 
+    <form asp-controller="Home" asp-action = "Index" method = "Post"> 
         <input type="text" name="Name" placeholder = "What needs to be done">
        <button type = "submit">Submit</button>
      </form>
@@ -16,13 +16,16 @@
      <ul>
          @foreach(var item in Model)
          {
+             if(item.Complete == false)
+            {
             <form asp-controller="Home" asp-action = "Complete" method = "Post"> 
             <li>@item.TaskName
-            <input type="hidden" name="ID" value="@item.ID"> //added this and it all crashed
+            <input type="hidden" name="ID" value="@item.ID"> 
             <button type = "submit">Done</button>
             
             </li> 
             </form>         
+            }
          }
      </ul>
  </section>
@@ -31,9 +34,9 @@
      @foreach(var item in Model)
          {
              @if (item.Complete == true)
-             {
+            {
             <li>@item.TaskName</li> 
-             }
+            }
          }
  </section>
 
