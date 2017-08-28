@@ -14,20 +14,28 @@
  <section>
      <h2> Must be done: </h2> 
      <ul>
-         <!---the issue --> 
-       <form asp-controller="Home" asp-action = "Index" method = "Post"> 
          @foreach(var item in Model)
          {
+            <form asp-controller="Home" asp-action = "Complete" method = "Post"> 
             <li>@item.TaskName
+            <input type="hidden" name="ID" value="@item.ID"> //added this and it all crashed
             <button type = "submit">Done</button>
+            
             </li> 
+            </form>         
          }
-       </form>         
      </ul>
  </section>
  <section>
      <h2>Done:</h2>
-  
+     @foreach(var item in Model)
+         {
+             @if (item.Complete == true)
+             {
+            <li>@item.TaskName</li> 
+             }
+         }
+ </section>
 
 
 

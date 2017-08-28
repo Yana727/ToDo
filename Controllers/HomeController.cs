@@ -37,12 +37,11 @@ namespace ToDo.Controllers
         [HttpPost]
         public IActionResult Complete(int ID)
         {
-            var fin = _context.ToDoModel.FirstOrDefault(m=>m.ID == ID);
+            var fin = _context.ToDoModel.FirstOrDefault(m => m.ID == ID);
             fin.Finished();
             _context.SaveChanges();
             return Redirect("Index");
         }
-
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
